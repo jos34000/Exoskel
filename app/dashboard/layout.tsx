@@ -1,6 +1,11 @@
 import { currentUser } from "@clerk/nextjs/server";
 import type { Metadata } from "next";
+import { SidebarBreadcrumb } from "./_components/sidebar-breadcrumb";
 
+/**
+ * @component DashboardLayout
+ * @description Layout principal du dashboard qui englobe toutes les pages du tableau de bord
+ */
 export async function generateMetadata(): Promise<Metadata> {
   const user = await currentUser();
 
@@ -15,5 +20,10 @@ export default async function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div>{children}</div>;
+  return (
+    <div>
+      <SidebarBreadcrumb />
+      {children}
+    </div>
+  );
 }

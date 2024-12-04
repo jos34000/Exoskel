@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Dashboard Boilerplate
 
-## Getting Started
+Une boilerplate moderne et typée pour créer rapidement des applications dashboard avec Next.js 15, TypeScript et Shadcn UI.
 
-First, run the development server:
+## 🚀 Fonctionnalités
+
+- ✨ Next.js 15 App Router
+- 💎 TypeScript
+- 🎨 Tailwind CSS
+- 🔐 Authentication avec Clerk
+- 🎯 Composants UI avec Shadcn/Radix
+- 📱 Design Responsive
+- 🔍 SEO optimisé
+- 🚦 Gestion d'état avec URL Search Params (nuqs)
+
+## 📦 Prérequis
+
+- Node.js 18+
+- pnpm
+
+## 🛠 Installation
+
+1. Clonez le repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/jos34000/boilerplate.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Installez les dépendances
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Configurez les variables d'environnement
 
-## Learn More
+```bash
+cp .env.example .env.local
+```
 
-To learn more about Next.js, take a look at the following resources:
+4. Lancez le serveur de développement
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔧 Configuration
 
-## Deploy on Vercel
+### Structure des dossiers
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+├── app/
+│   ├── dashboard/           # Routes du dashboard
+│   │   ├── components/      # Composants spécifiques au dashboard
+│   │   ├── [username]/      # Pages dynamiques par utilisateur
+│   │   ├── layout.tsx       # Layout du dashboard
+│   │   └── page.tsx        # Page qui permet de rediriger vers le /dashboard/[username]
+│   └── layout.tsx          # Layout principal de l'application
+├── components/             # Composants réutilisables
+├── lib/                   # Utilitaires et configurations
+└── public/               # Assets statiques
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Personnalisation
+
+1. **Navigation**
+
+   - Modifiez `app/dashboard/_components/items.ts` pour personnaliser les éléments de la sidebar
+   - Modifiez `.env.local` pour différents aspect de l'application tels que son nom, clés API, etc.
+
+2. **Thème**
+
+   - Personnalisez les couleurs dans `tailwind.config.js`
+   - Modifiez les composants Shadcn UI dans `components/ui`
+
+3. **Authentication**
+   - Configurez les providers dans votre dashboard Clerk
+   - Ajustez les stratégies d'authentification selon vos besoins
+
+## 🔐 Authentication
+
+Le boilerplate utilise Clerk pour l'authentification. Pour configurer :
+
+1. Ajoutez vos clés d'API dans `.env.local`
+2. Configurez vos providers dans le dashboard
+3. Personnalisez les callbacks d'authentification si nécessaire
+
+## 📱 Responsive Design
+
+Le design est mobile-first avec Tailwind CSS. Les breakpoints principaux :
+
+- sm: 640px
+- md: 768px
+- lg: 1024px
+- xl: 1280px
+- 2xl: 1536px
+
+## 🚀 Déploiement
+
+1. Construisez l'application
+
+```bash
+pnpm build
+```
+
+## 📚 Documentation des composants
+
+Chaque composant est documenté avec JSDoc. Exemple :
+
+```tsx
+/**
+ * @component SidebarBreadcrumb
+ * @description Affiche le chemin de navigation dans la sidebar
+ */
+```
+
+## 🤝 Contribution
+
+1. Fork le projet
+2. Créez votre branche (`git checkout -b feature/AmazingFeature`)
+3. Committez vos changements (`git commit -m 'Add some AmazingFeature'`)
+4. Push vers la branche (`git push origin feature/AmazingFeature`)
+5. Ouvrez une Pull Request
+
+## 📝 License
+
+MIT

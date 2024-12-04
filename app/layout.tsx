@@ -14,7 +14,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        layout: {
+          socialButtonsPlacement: "bottom",
+          socialButtonsVariant: "iconButton",
+          termsPageUrl: "https://clerk.com/terms",
+          unsafe_disableDevelopmentModeWarnings: true,
+        },
+      }}
+    >
       <html lang="en" suppressHydrationWarning>
         <body className={`antialiased`}>
           <ThemeProvider
@@ -23,9 +32,7 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <main className="flex min-h-screen flex-col items-center justify-center">
-              {children}
-            </main>
+            <main>{children}</main>
           </ThemeProvider>
         </body>
       </html>
