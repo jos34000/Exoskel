@@ -11,19 +11,6 @@ type PlaceholdersAndVanishInputProps = {
   error?: string;
 };
 
-type Particle = {
-  x: number;
-  y: number;
-  r: number;
-  color: string;
-};
-
-type PixelData = {
-  x: number;
-  y: number;
-  color: [number, number, number, number];
-};
-
 export function PlaceholdersAndVanishInput({
   placeholders,
   onChange,
@@ -32,20 +19,19 @@ export function PlaceholdersAndVanishInput({
   const [currentPlaceholder, setCurrentPlaceholder] = useState(0);
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const startAnimation = useCallback(() => {
+  const startAnimation = () => {
     intervalRef.current = setInterval(() => {
       setCurrentPlaceholder((prev) => (prev + 1) % placeholders.length);
     }, 3000);
-  }, [placeholders.length]);
-
-  const handleVisibilityChange = useCallback(() => {
+  };
+  const handleVisibilityChange = () => {
     if (document.visibilityState !== "visible" && intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     } else if (document.visibilityState === "visible") {
       startAnimation();
     }
-  }, [startAnimation]);
+  };
 
   useEffect(() => {
     startAnimation();
@@ -57,10 +43,10 @@ export function PlaceholdersAndVanishInput({
       }
       document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
-  }, [startAnimation, handleVisibilityChange]);
+  }, [handleVisibilityChange, placeholders, startAnimation]);
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const newDataRef = useRef<Particle[]>([]);
+  const newDataRef = useRef<any[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState("");
   const [animating, setAnimating] = useState(false);
@@ -84,7 +70,7 @@ export function PlaceholdersAndVanishInput({
 
     const imageData = ctx.getImageData(0, 0, 800, 800);
     const pixelData = imageData.data;
-    const newData: PixelData[] = [];
+    const newData: any[] = [];
 
     for (let t = 0; t < 800; t++) {
       const i = 4 * t * 800;
@@ -121,40 +107,44 @@ export function PlaceholdersAndVanishInput({
     draw();
   }, [value, draw]);
 
-  const renderParticle = (
-    ctx: CanvasRenderingContext2D,
-    pos: number,
-    particle: Particle
-  ) => {
-    const { x, y, r, color } = particle;
-    if (x > pos) {
-      ctx.beginPath();
-      ctx.rect(x, y, r, r);
-      ctx.fillStyle = color;
-      ctx.strokeStyle = color;
-      ctx.stroke();
-    }
-  };
-
-  const renderFrame = (ctx: CanvasRenderingContext2D, pos: number) => {
-    ctx.clearRect(pos, 0, 800, 800);
-    newDataRef.current.forEach((particle) =>
-      renderParticle(ctx, pos, particle)
-    );
-  };
-
   const animate = (start: number) => {
     const animateFrame = (pos: number = 0) => {
       requestAnimationFrame(() => {
+        const newArr = [];
+        for (const current of newDataRef.current) {
+          if (current.x < pos) {
+            newArr.push(current);
+          } else {
+            if (current.r <= 0) {
+              current.r = 0;
+              continue;
+            }
+            current.x += Math.random() > 0.5 ? 1 : -1;
+            current.y += Math.random() > 0.5 ? 1 : -1;
+            current.r -= 0.05 * Math.random();
+            newArr.push(current);
+          }
+        }
+        newDataRef.current = newArr;
         const ctx = canvasRef.current?.getContext("2d");
         if (ctx) {
-          renderFrame(ctx, pos);
-          if (newDataRef.current.length > 0) {
-            animateFrame(pos - 8);
-          } else {
-            setValue("");
-            setAnimating(false);
-          }
+          ctx.clearRect(pos, 0, 800, 800);
+          newDataRef.current.forEach((t) => {
+            const { x: n, y: i, r: s, color } = t;
+            if (n > pos) {
+              ctx.beginPath();
+              ctx.rect(n, i, s, s);
+              ctx.fillStyle = color;
+              ctx.strokeStyle = color;
+              ctx.stroke();
+            }
+          });
+        }
+        if (newDataRef.current.length > 0) {
+          animateFrame(pos - 8);
+        } else {
+          setValue("");
+          setAnimating(false);
         }
       });
     };
