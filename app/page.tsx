@@ -1,13 +1,21 @@
+import { Carroussel } from "@/components/home/carroussel";
 import { HeroSection } from "@/components/home/hero-section";
 import { Nav } from "@/components/home/nav";
-import { Carroussel } from "../components/home/carroussel";
+import { Steps } from "@/components/home/steps";
 
-export default function Home() {
+// Fonction interne pour simuler un délai
+const simulateDelay = () => new Promise((resolve) => setTimeout(resolve, 1000));
+
+export default async function Home() {
+  // Simule une opération asynchrone
+  await simulateDelay();
+
   return (
     <>
       <Nav />
       <HeroSection />
       <Carroussel />
+      <Steps />
     </>
   );
 }

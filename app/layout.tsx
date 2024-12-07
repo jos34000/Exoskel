@@ -1,7 +1,9 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
+import { Suspense } from "react";
 import "./globals.css";
+import Loading from "./loading";
 
 export const metadata: Metadata = {
   title: process.env.NEXT_PUBLIC_APP_NAME,
@@ -32,7 +34,9 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <main>{children}</main>
+            <main>
+              <Suspense fallback={<Loading />}>{children}</Suspense>
+            </main>
           </ThemeProvider>
         </body>
       </html>

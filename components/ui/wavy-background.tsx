@@ -55,7 +55,7 @@ export const WavyBackground = ({
     const { ctx, w, h } = contextRef.current;
     if (!ctx) return;
 
-    ctx.fillStyle = backgroundFill || "black";
+    ctx.fillStyle = backgroundFill ?? "black";
     ctx.globalAlpha = waveOpacity || 0.5;
     ctx.fillRect(0, 0, w, h);
 
@@ -63,7 +63,7 @@ export const WavyBackground = ({
       contextRef.current.nt += speed === "fast" ? 0.002 : 0.001;
       for (let i = 0; i < n; i++) {
         ctx.beginPath();
-        ctx.lineWidth = waveWidth || 50;
+        ctx.lineWidth = waveWidth ?? 50;
         ctx.strokeStyle = waveColors[i % waveColors.length];
         for (let x = 0; x < w; x += 5) {
           const y = noise(x / 800, 0.3 * i, contextRef.current.nt) * 100;
