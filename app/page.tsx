@@ -1,4 +1,5 @@
 import { Carroussel } from "@/components/home/carroussel";
+import { Contact } from "@/components/home/contact-section";
 import { HeroSection } from "@/components/home/hero-section";
 import { Nav } from "@/components/home/nav";
 import { Steps } from "@/components/home/steps";
@@ -16,6 +17,7 @@ export default async function Home() {
       <HeroSection />
       <Carroussel />
       <Steps />
+      <Contact />
     </>
   );
 }
