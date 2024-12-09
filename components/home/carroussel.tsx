@@ -1,5 +1,5 @@
 "use client";
-import { Card, Carousel } from "@/components/ui/apple-cards-carousel";
+import { Card, Carousel } from "@/components/ui/cards-carousel";
 import Image from "next/image";
 
 export function Carroussel() {

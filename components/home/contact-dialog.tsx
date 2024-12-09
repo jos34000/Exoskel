@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { contactStepSchema } from "@/lib/schemas/contacting.schema";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -45,6 +46,10 @@ export const ContactDialog = ({
       if (step === 1) {
         contactStepSchema.step1.parse({ message });
       } else if (step === 2) {
+        if (!reason) {
+          setErrors({ reason: "Please select a reason" });
+          return false;
+        }
         contactStepSchema.step2.parse({ reason });
       } else if (step === 3) {
         contactStepSchema.step3.parse({ email, message, reason });
@@ -90,8 +95,8 @@ export const ContactDialog = ({
   };
 
   const getStepDescription = () => {
-    if (step === 1) return "Describe your request !";
-    if (step === 2) return "Select a reason ?";
+    if (step === 1) return "Describe your request!";
+    if (step === 2) return "Choose one of the following reasons";
     return "Check the information before sending";
   };
 
@@ -123,29 +128,41 @@ export const ContactDialog = ({
             </div>
           )}
           {step === 2 && (
-            <Select onValueChange={setReason}>
-              <SelectTrigger className="bg-neutral-950 border-neutral-800 text-neutral-200 rounded-lg focus:ring-2 focus:ring-teal-500">
-                <SelectValue placeholder="Sélectionnez une raison" />
-              </SelectTrigger>
-              <SelectContent className="bg-neutral-950 border-neutral-800 text-neutral-200">
-                <SelectItem value="emploi">Offre d&apos;emploi</SelectItem>
-                <SelectItem value="collaboration">Une collaboration</SelectItem>
-                <SelectItem value="autre">Autre</SelectItem>
-              </SelectContent>
-            </Select>
+            <div>
+              <Select onValueChange={setReason}>
+                <SelectTrigger
+                  className={cn(
+                    "bg-neutral-950 text-neutral-200 rounded-lg transition-all duration-300",
+                    errors.reason ? "border-red-500" : "border-neutral-800",
+                    "hover:border-sky-600 focus:border-sky-600 focus:ring-1 focus:ring-sky-600"
+                  )}
+                >
+                  <SelectValue placeholder="Select a reason" />
+                </SelectTrigger>
+                <SelectContent className="bg-neutral-950 border-neutral-800 text-neutral-200">
+                  <SelectItem value="job">Job offer</SelectItem>
+                  <SelectItem value="collaboration">Collaboration</SelectItem>
+                  <SelectItem value="suggestion">Suggestion</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+              {errors.reason && (
+                <p className="text-red-500 text-sm mt-1">{errors.reason}</p>
+              )}
+            </div>
           )}
           {step === 3 && (
             <div className="space-y-3 text-sm bg-neutral-950 border border-neutral-800 p-4 rounded-lg">
               <p>
-                <strong className="text-neutral-200">Email :</strong>{" "}
+                <strong className="text-neutral-200">Email:</strong>{" "}
                 <span className="text-neutral-500">{email}</span>
               </p>
               <p>
-                <strong className="text-neutral-200">Message :</strong>{" "}
+                <strong className="text-neutral-200">Message:</strong>{" "}
                 <span className="text-neutral-500">{message}</span>
               </p>
               <p>
-                <strong className="text-neutral-200">Raison :</strong>{" "}
+                <strong className="text-neutral-200">Reason:</strong>{" "}
                 <span className="text-neutral-500">{reason}</span>
               </p>
             </div>
@@ -157,7 +174,7 @@ export const ContactDialog = ({
               onClick={prevStep}
               className="bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg hover:bg-neutral-900 px-6 py-2 transition-colors duration-300"
             >
-              Retour
+              Back
             </Button>
           )}
           {step < 3 ? (
@@ -165,14 +182,14 @@ export const ContactDialog = ({
               onClick={nextStep}
               className="bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg focus:ring-2 focus:ring-teal-500 hover:bg-neutral-900 px-6 py-2 transition-all duration-300"
             >
-              Suivant
+              Next
             </Button>
           ) : (
             <Button
               onClick={handleSubmit}
               className="bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg focus:ring-2 focus:ring-teal-500 hover:bg-neutral-900 px-6 py-2 transition-all duration-300"
             >
-              Envoyer
+              Send
             </Button>
           )}
         </DialogFooter>

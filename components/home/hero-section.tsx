@@ -7,7 +7,7 @@ export const HeroSection = () => {
         A new way for your workflow!
       </p>
       <p className="text-base md:text-lg mt-4 text-white font-normal inter-var text-center">
-        Just by using this boilerplate.
+        Just by using this Exo-Skeleton.
       </p>
     </WavyBackground>
   );

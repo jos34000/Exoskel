@@ -4,6 +4,7 @@ import Image from "next/image";
 export function Steps() {
   const data = [
     {
+      id: "step-1",
       title: "First step",
       content: (
         <div>
@@ -23,6 +24,7 @@ export function Steps() {
       ),
     },
     {
+      id: "step-2",
       title: "Next step",
       content: (
         <div>
@@ -46,6 +48,7 @@ export function Steps() {
       ),
     },
     {
+      id: "step-3",
       title: "Last step",
       content: (
         <div>

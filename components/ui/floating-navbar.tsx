@@ -1,13 +1,14 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { SignInButton } from "@clerk/nextjs";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Link from "next/link";
 
 type NavItem = {
+  id: string;
   name: string;
   link: string;
-  icon?: JSX.Element;
+  icon?: React.ReactNode;
 };
 
 export const FloatingNav = ({
@@ -36,12 +37,14 @@ export const FloatingNav = ({
       )}
     >
       {navItems.map(
-        (
-          navItem: { name: string; link: string; icon?: JSX.Element },
-          idx: number
-        ) => (
+        (navItem: {
+          id: string;
+          name: string;
+          link: string;
+          icon?: React.ReactNode;
+        }) => (
           <Link
-            key={`link=${idx}`}
+            key={navItem.id}
             href={navItem.link}
             className={cn(
               "relative dark:text-neutral-50 items-center flex space-x-1 text-neutral-600 dark:hover:text-neutral-300 hover:text-neutral-500"

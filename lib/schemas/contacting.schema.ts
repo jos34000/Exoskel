@@ -1,12 +1,10 @@
 import { z } from "zod";
 
 export const contactSchema = {
-  email: z.string().email("L'email n'est pas valide"),
-  message: z
-    .string()
-    .min(10, "Le message doit contenir au moins 10 caractères"),
-  reason: z.enum(["emploi", "collaboration", "autre"], {
-    required_error: "Veuillez sélectionner une raison",
+  email: z.string().email("Invalid email address"),
+  message: z.string().min(10, "Message must contain at least 10 characters"),
+  reason: z.enum(["job", "collaboration", "suggestion", "other"], {
+    required_error: "Please select a reason",
   }),
 };
 
