@@ -11,6 +11,7 @@ import {
 
 import { contactStepSchema } from "@/lib/schemas/contacting.schema";
 import { cn } from "@/lib/utils";
+import { sendEmail } from "@/lib/utils/sendEmail";
 import { useState } from "react";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -78,9 +79,10 @@ export const ContactDialog = ({
 
   const prevStep = () => setStep(step - 1);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (validateStep()) {
       onSubmit({ email, message, reason });
+      await sendEmail(email, reason, message);
       setStep(1);
       setMessage("");
       setReason("");
