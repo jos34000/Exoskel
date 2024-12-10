@@ -172,7 +172,7 @@ export const ContactDialog = ({
           {step > 1 && (
             <Button
               onClick={prevStep}
-              className="bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg hover:bg-neutral-900 px-6 py-2 transition-colors duration-300"
+              className="bg-neutral-950 border hover:border-indigo-500 text-neutral-200 rounded-lg hover:bg-neutral-900 px-6 py-2 transition-colors duration-300"
             >
               Back
             </Button>
@@ -180,14 +180,14 @@ export const ContactDialog = ({
           {step < 3 ? (
             <Button
               onClick={nextStep}
-              className="bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg focus:ring-2 focus:ring-teal-500 hover:bg-neutral-900 px-6 py-2 transition-all duration-300"
+              className="bg-neutral-950 border hover:border-sky-500 text-neutral-200 rounded-lg  hover:bg-neutral-900 px-6 py-2 transition-all duration-300"
             >
               Next
             </Button>
           ) : (
             <Button
               onClick={handleSubmit}
-              className="bg-neutral-950 border border-neutral-800 text-neutral-200 rounded-lg focus:ring-2 focus:ring-teal-500 hover:bg-neutral-900 px-6 py-2 transition-all duration-300"
+              className="bg-neutral-950 border hover:border-sky-500 text-neutral-200 rounded-lg hover:bg-neutral-900 px-6 py-2 transition-all duration-300"
             >
               Send
             </Button>
